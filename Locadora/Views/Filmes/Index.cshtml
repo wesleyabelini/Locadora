@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Locadora.Models.Filme>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="form-control">
+    <div class="col-md-2">
+        @Html.Label("Nome Filme")
+    </div>
+    <div class="col-md-8">
+        @Html.Editor("", null)
+    </div>
+</div>
+
+<div class="btn btn-success">
+    @Html.ActionLink("Filtrar", "FilterIndex", new { name =  })
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdGenero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isLocated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdGenero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isLocated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdFilme }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdFilme }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdFilme })
+        </td>
+    </tr>
+}
+
+</table>

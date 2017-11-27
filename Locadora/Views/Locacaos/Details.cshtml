@@ -1,0 +1,51 @@
+﻿@model Locadora.Models.Locacao
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Locacao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdFilme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdFilme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLocacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLocacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEntrega)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateEntrega)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdLocacao }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

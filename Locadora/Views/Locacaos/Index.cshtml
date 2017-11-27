@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Locadora.Models.Locacao>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdFilme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateLocacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntrega)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdFilme)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateLocacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEntrega)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdLocacao }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdLocacao }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdLocacao })
+        </td>
+    </tr>
+}
+
+</table>
