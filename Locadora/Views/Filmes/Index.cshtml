@@ -10,26 +10,18 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="form-control">
-    <div class="col-md-2">
-        @Html.Label("Nome Filme")
-    </div>
-    <div class="col-md-8">
-        @Html.Editor("", null)
-    </div>
-</div>
-
-<div class="btn btn-success">
-    @Html.ActionLink("Filtrar", "FilterIndex", new { name =  })
-</div>
-
+@using (Html.BeginForm())
+{
+    @Html.TextBox("stringSearch", ViewBag.CurrentSearch as string)
+    <input type="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nome)
+            @Html.DisplayNameFor(model => model.Genero.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IdGenero)
+            @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.isLocated)
@@ -40,18 +32,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Nome)
+            @Html.DisplayFor(modelItem => item.Genero.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IdGenero)
+            @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.isLocated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdFilme }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdFilme }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdFilme })
+            @Html.ActionLink("Edit", "Edit", new { id=item.FilmeID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FilmeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FilmeID })
         </td>
     </tr>
 }

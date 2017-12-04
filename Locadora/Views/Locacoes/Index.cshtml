@@ -10,13 +10,19 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm())
+{
+    @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+
+    <input type="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.IdCliente)
+            @Html.DisplayNameFor(model => model.Filme.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IdFilme)
+            @Html.DisplayNameFor(model => model.Cliente.Nome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateLocacao)
@@ -30,10 +36,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.IdCliente)
+            @Html.DisplayFor(modelItem => item.Filme.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IdFilme)
+            @Html.DisplayFor(modelItem => item.Cliente.Nome)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateLocacao)
@@ -42,9 +48,9 @@
             @Html.DisplayFor(modelItem => item.DateEntrega)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdLocacao }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdLocacao }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdLocacao })
+            @Html.ActionLink("Edit", "Edit", new { id=item.LocacaoID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocacaoID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocacaoID })
         </td>
     </tr>
 }

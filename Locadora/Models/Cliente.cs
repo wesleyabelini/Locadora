@@ -9,7 +9,11 @@ namespace Locadora.Models
     public class Cliente
     {
         [Key]
-        public int IdCliente { get; set; }
+        public int ID { get; set; }
+
+        [Display(Name="Nome")]
         public string Nome { get; set; }
+
+        public virtual ICollection<Locacao> Locacao { get; set; }
     }
 }

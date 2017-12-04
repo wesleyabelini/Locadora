@@ -10,17 +10,27 @@ using Locadora.Models;
 
 namespace Locadora.Controllers
 {
-    public class LocacaosController : Controller
+    public class LocacoesController : Controller
     {
         private LocadoraContext db = new LocadoraContext();
 
-        // GET: Locacaos
-        public ActionResult Index()
+        // GET: Locacoes
+        public ActionResult Index(string searchString)
         {
-            return View(db.Locacaos.ToList());
+            var locacaos = db.Locacaos.Include(l => l.Filme).Include(l=>l.Cliente);
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                locacaos = locacaos.Where(l =>
+                l.Cliente.Nome.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            return View(locacaos.ToList());
         }
 
-        // GET: Locacaos/Details/5
+        // GET: Locacoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,30 +45,39 @@ namespace Locadora.Controllers
             return View(locacao);
         }
 
-        // GET: Locacaos/Create
+        // GET: Locacoes/Create
         public ActionResult Create()
         {
+            var filme = from f in db.Filmes
+                .Where(f=>f.isLocated==false)
+                select f;
+
+            ViewBag.FilmeID = new SelectList(filme, "FilmeID", "Nome");
             return View();
         }
 
-        // POST: Locacaos/Create
+        // POST: Locacoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdLocacao,IdCliente,IdFilme,DateLocacao,DateEntrega")] Locacao locacao)
+        public ActionResult Create([Bind(Include = "LocacaoID,ClienteID,FilmeID,DateLocacao,DateEntrega")] Locacao locacao, Filme filme)
         {
             if (ModelState.IsValid)
             {
+                Filme film = db.Filmes.Find(filme.FilmeID);
+                film.isLocated = true;
+
                 db.Locacaos.Add(locacao);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
             return View(locacao);
         }
 
-        // GET: Locacaos/Edit/5
+        // GET: Locacoes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,15 +89,16 @@ namespace Locadora.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
             return View(locacao);
         }
 
-        // POST: Locacaos/Edit/5
+        // POST: Locacoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdLocacao,IdCliente,IdFilme,DateLocacao,DateEntrega")] Locacao locacao)
+        public ActionResult Edit([Bind(Include = "LocacaoID,ClientID,FilmeID,DateLocacao,DateEntrega")] Locacao locacao)
         {
             if (ModelState.IsValid)
             {
@@ -86,10 +106,11 @@ namespace Locadora.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
             return View(locacao);
         }
 
-        // GET: Locacaos/Delete/5
+        // GET: Locacoes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,12 +125,16 @@ namespace Locadora.Controllers
             return View(locacao);
         }
 
-        // POST: Locacaos/Delete/5
+        // POST: Locacoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Locacao locacao = db.Locacaos.Find(id);
+
+            Filme filme = db.Filmes.Find(locacao.FilmeID);
+            filme.isLocated = false;
+
             db.Locacaos.Remove(locacao);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -9,13 +9,25 @@ namespace Locadora.Models
     public class Locacao
     {
         [Key]
-        public int IdLocacao { get; set; }
-        public int IdCliente { get; set; }
-        public int IdFilme { get; set; }
+        public int LocacaoID { get; set; }
+
+        [Display(Name ="ID Cliente")]
+        public int ClienteID { get; set; }
+
+        [Display(Name ="ID Filme")]
+        public int FilmeID { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
+        [Display(Name ="Data Locação")]
         public DateTime DateLocacao { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Data Locação")]
         public DateTime DateEntrega { get; set; }
 
-        public List<Cliente> GetCliente { get; set; }
-        public List<Filme> GetFilme { get; set; }
+        public virtual Cliente Cliente { get; set; }
+        public virtual Filme Filme { get; set; }
     }
 }

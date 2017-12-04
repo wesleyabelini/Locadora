@@ -15,9 +15,18 @@ namespace Locadora.Controllers
         private LocadoraContext db = new LocadoraContext();
 
         // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.Clientes.ToList());
+            IQueryable<Cliente> cliente = db.Clientes;
+
+            ViewBag.CurrentSearch = SearchString;
+
+            if (!String.IsNullOrWhiteSpace(SearchString))
+            {
+                cliente = cliente.Where(c => c.Nome.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+            return View(cliente);
         }
 
         // GET: Clientes/Details/5
@@ -46,7 +55,7 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCliente,Nome")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "ClienteID,Nome")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +87,7 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdCliente,Nome")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "ClienteID,Nome")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {

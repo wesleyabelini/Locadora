@@ -12,19 +12,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.IdCliente)
+            @Html.DisplayNameFor(model => model.Filme.Nome)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdCliente)
+            @Html.DisplayFor(model => model.Filme.Nome)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IdFilme)
+            @Html.DisplayNameFor(model => model.Cliente.Nome)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdFilme)
+            @Html.DisplayFor(model => model.Cliente.Nome)
         </dd>
 
         <dt>
@@ -46,6 +46,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdLocacao }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LocacaoID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

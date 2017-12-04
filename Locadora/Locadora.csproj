@@ -150,19 +150,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\FilmesController.cs" />
-    <Compile Include="Controllers\GeneroesController.cs" />
+    <Compile Include="Controllers\GenerosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocacaosController.cs" />
+    <Compile Include="Controllers\LocacoesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711271234005_Locadora.cs" />
-    <Compile Include="Migrations\201711271234005_Locadora.Designer.cs">
-      <DependentUpon>201711271234005_Locadora.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711271242133_baseUpdate.cs" />
-    <Compile Include="Migrations\201711271242133_baseUpdate.Designer.cs">
-      <DependentUpon>201711271242133_baseUpdate.cs</DependentUpon>
+    <Compile Include="Migrations\201712032206154_Initial.cs" />
+    <Compile Include="Migrations\201712032206154_Initial.Designer.cs">
+      <DependentUpon>201712032206154_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -173,10 +169,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Locadora.Models.LocadoraContext.mdf" />
-    <Content Include="App_Data\Locadora.Models.LocadoraContext_log.ldf">
-      <DependentUpon>Locadora.Models.LocadoraContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -231,29 +223,28 @@
     <Content Include="Views\Filmes\Details.cshtml" />
     <Content Include="Views\Filmes\Edit.cshtml" />
     <Content Include="Views\Filmes\Index.cshtml" />
-    <Content Include="Views\Generoes\Create.cshtml" />
-    <Content Include="Views\Generoes\Delete.cshtml" />
-    <Content Include="Views\Generoes\Details.cshtml" />
-    <Content Include="Views\Generoes\Edit.cshtml" />
-    <Content Include="Views\Generoes\Index.cshtml" />
-    <Content Include="Views\Locacaos\Create.cshtml" />
-    <Content Include="Views\Locacaos\Delete.cshtml" />
-    <Content Include="Views\Locacaos\Details.cshtml" />
-    <Content Include="Views\Locacaos\Edit.cshtml" />
-    <Content Include="Views\Locacaos\Index.cshtml" />
+    <Content Include="Views\Generos\Create.cshtml" />
+    <Content Include="Views\Generos\Delete.cshtml" />
+    <Content Include="Views\Generos\Details.cshtml" />
+    <Content Include="Views\Generos\Edit.cshtml" />
+    <Content Include="Views\Generos\Index.cshtml" />
+    <Content Include="Views\Locacoes\Create.cshtml" />
+    <Content Include="Views\Locacoes\Delete.cshtml" />
+    <Content Include="Views\Locacoes\Details.cshtml" />
+    <Content Include="Views\Locacoes\Edit.cshtml" />
+    <Content Include="Views\Locacoes\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711271234005_Locadora.resx">
-      <DependentUpon>201711271234005_Locadora.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712032206154_Initial.resx">
+      <DependentUpon>201712032206154_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711271242133_baseUpdate.resx">
-      <DependentUpon>201711271242133_baseUpdate.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

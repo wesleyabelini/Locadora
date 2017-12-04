@@ -8,18 +8,19 @@ namespace Locadora.Models
 {
     public class Filme
     {
-        public Filme()
-        {
-            GetGenero = new HashSet<Genero>();
-        }
-
         [Key]
-        public int IdFilme { get; set; }
-        public string Nome { get; set; }
-        public int IdGenero { get; set; }
+        public int FilmeID { get; set; }
 
+        [Display(Name ="Nome")]
+        public string Nome { get; set; }
+
+        [Display(Name ="ID Genero")]
+        public int GeneroID { get; set; }
+
+        [Display(Name ="Locado")]
         public bool isLocated { get; set; }
 
-        public ICollection<Genero> GetGenero { get; set; }
+        public virtual Genero Genero { get; set; }
+        public virtual ICollection<Locacao> Locacao { get; set; }
     }
 }

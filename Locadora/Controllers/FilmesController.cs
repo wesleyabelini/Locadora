@@ -15,15 +15,18 @@ namespace Locadora.Controllers
         private LocadoraContext db = new LocadoraContext();
 
         // GET: Filmes
-        public ActionResult Index()
+        public ActionResult Index(string stringSearch)
         {
-            return View(db.Filmes.ToList());
-        }
+            var filmes = db.Filmes.Include(f => f.Genero);
 
-        public ActionResult FilterIndex(string name)
-        {
-            SelectList filme = new SelectList(db.Filmes.Where(a => a.Nome.Contains(name)));
-            return View(filme);
+            ViewBag.CurrentSearch = stringSearch;
+
+            if (!String.IsNullOrWhiteSpace(stringSearch))
+            {
+                filmes = filmes.Where(f => f.Nome.ToUpper().Contains(stringSearch.ToUpper()));
+            }
+
+            return View(filmes.ToList());
         }
 
         // GET: Filmes/Details/5
@@ -44,7 +47,7 @@ namespace Locadora.Controllers
         // GET: Filmes/Create
         public ActionResult Create()
         {
-            ViewBag.IdGenero = new SelectList(db.Generoes, "IdGenero", "Nome");
+            ViewBag.GeneroID = new SelectList(db.Generoes, "GeneroID", "Nome");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdFilme,Nome,IdGenero,isLocated")] Filme filme)
+        public ActionResult Create([Bind(Include = "FilmeID,Nome,GeneroID,isLocated")] Filme filme)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +65,7 @@ namespace Locadora.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdGenero = new SelectList(db.Generoes, "IdGenero", "Nome", filme.IdGenero); //Deve-se manter o Id Original do nome da classe
+            ViewBag.GeneroID = new SelectList(db.Generoes, "GeneroID", "Nome", filme.GeneroID);
             return View(filme);
         }
 
@@ -78,9 +81,7 @@ namespace Locadora.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.IdGenero = new SelectList(db.Generoes, "IdGenero", "Nome");
-
+            ViewBag.GeneroID = new SelectList(db.Generoes, "GeneroID", "Nome", filme.GeneroID);
             return View(filme);
         }
 
@@ -89,7 +90,7 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdFilme,Nome,IdGenero,isLocated")] Filme filme)
+        public ActionResult Edit([Bind(Include = "FilmeID,Nome,GeneroID,isLocated")] Filme filme)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +98,7 @@ namespace Locadora.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.GeneroID = new SelectList(db.Generoes, "GeneroID", "Nome", filme.GeneroID);
             return View(filme);
         }
 

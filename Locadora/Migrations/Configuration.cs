@@ -1,19 +1,18 @@
 namespace Locadora.Migrations
 {
-    using global::Locadora.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LocadoraContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Locadora.Models.LocadoraContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(LocadoraContext context)
+        protected override void Seed(Locadora.Models.LocadoraContext context)
         {
             //  This method will be called after migrating to the latest version.
 

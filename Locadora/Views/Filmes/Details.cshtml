@@ -12,19 +12,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Genero.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genero.Nome)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Nome)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdGenero)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdGenero)
         </dd>
 
         <dt>
@@ -38,6 +38,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdFilme }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FilmeID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
