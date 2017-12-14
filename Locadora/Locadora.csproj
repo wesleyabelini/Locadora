@@ -160,6 +160,10 @@
     <Compile Include="Migrations\201712032206154_Initial.Designer.cs">
       <DependentUpon>201712032206154_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712141408353_databaseLocacoes.cs" />
+    <Compile Include="Migrations\201712141408353_databaseLocacoes.Designer.cs">
+      <DependentUpon>201712141408353_databaseLocacoes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Filme.cs" />
@@ -167,6 +171,7 @@
     <Compile Include="Models\Locacao.cs" />
     <Compile Include="Models\LocadoraContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\LocadoraCreateData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -241,6 +246,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712032206154_Initial.resx">
       <DependentUpon>201712032206154_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712141408353_databaseLocacoes.resx">
+      <DependentUpon>201712141408353_databaseLocacoes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

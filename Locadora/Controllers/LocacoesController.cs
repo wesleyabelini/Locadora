@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Locadora.Models;
+using Locadora.ViewModels;
 
 namespace Locadora.Controllers
 {
@@ -24,10 +25,10 @@ namespace Locadora.Controllers
             if (!String.IsNullOrWhiteSpace(searchString))
             {
                 locacaos = locacaos.Where(l =>
-                l.Cliente.Nome.ToUpper().Contains(searchString.ToUpper()));
+                l.Cliente.Select(i=>i.Nome.ToUpper()).Contains(searchString.ToUpper()));
             }
 
-            return View(locacaos.ToList());
+            return View(locacaos);
         }
 
         // GET: Locacoes/Details/5
@@ -46,14 +47,32 @@ namespace Locadora.Controllers
         }
 
         // GET: Locacoes/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id, int? filmeID)
         {
             var filme = from f in db.Filmes
                 .Where(f=>f.isLocated==false)
                 select f;
 
+            var viewModel = new LocadoraCreateData();
+            viewModel.Cliente = db.Clientes.ToList();
+            viewModel.Filme = db.Filmes.ToList();
+
+            var cliente = db.Clientes;
+
             ViewBag.FilmeID = new SelectList(filme, "FilmeID", "Nome");
-            return View();
+
+            if (id != null)
+            {
+                ViewBag.ClienteID = id.Value;
+            }
+
+            if (filmeID != null)
+            {
+                ViewBag.FilmeID = filmeID.Value;
+                viewModel.Locacao = db.Locacaos.ToList();
+            }
+  
+            return View(viewModel);
         }
 
         // POST: Locacoes/Create
@@ -90,6 +109,7 @@ namespace Locadora.Controllers
                 return HttpNotFound();
             }
             ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
+ 
             return View(locacao);
         }
 
@@ -122,6 +142,11 @@ namespace Locadora.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.FilmeNome = from l in db.Locacaos
+                                join f in db.Filmes on l.FilmeID equals f.FilmeID
+                                where l.LocacaoID == id
+                                select f.Nome;
             return View(locacao);
         }
 

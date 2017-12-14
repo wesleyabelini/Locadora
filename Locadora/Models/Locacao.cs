@@ -27,7 +27,7 @@ namespace Locadora.Models
         [Display(Name = "Data Locação")]
         public DateTime DateEntrega { get; set; }
 
-        public virtual Cliente Cliente { get; set; }
-        public virtual Filme Filme { get; set; }
+        public virtual ICollection<Cliente> Cliente { get; set; }
+        public virtual ICollection<Filme> Filme { get; set; }
     }
 }

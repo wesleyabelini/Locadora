@@ -1,4 +1,4 @@
-﻿@model Locadora.Models.Locacao
+﻿@model Locadora.ViewModels.LocadoraCreateData
 
 @{
     ViewBag.Title = "Create";
@@ -7,53 +7,67 @@
 
 <h2>Create</h2>
 
+<table class="table">
+    <tr>
+        <th>Nome</th>
+    </tr>
+    @foreach(var item in Model.Cliente)
+    {
+        <tr class="selectRow" valign="top">
+            <td>@Html.DisplayFor(itemModel => item.Nome)</td>
+            <td>@Html.ActionLink("Select", "", new { id = item.ID })</td>
+        </tr>
+    }
+</table>
 
-@using (Html.BeginForm()) 
+@if(Model.Cliente != null)
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Locacao</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <h3>Cliente Selecionado</h3>
+
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Filme</th>
+        </tr>
+
+        @foreach(var item in Model.Filme)
+        {
+            <tr class="selectRow">
+                <td>@Html.DisplayFor(itemModel=> item.Nome)</td>
+                <td>@Html.ActionLink("Select", "", new { id = item.FilmeID })</td>
+            </tr>
+        }
+    </table>
+}
+
+@if(Model.Filme != null)
+{
+    <h3>Filme selected</h3>
+
+    @foreach (var item in Model.Locacao)
+    {
         <div class="form-group">
-            @Html.LabelFor(model => model.ClienteID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => item.DateLocacao, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ClienteID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClienteID, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => item.DateLocacao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => item.DateLocacao, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FilmeID, "FilmeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => item.DateEntrega, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("FilmeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FilmeID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateLocacao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateLocacao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateLocacao, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateEntrega, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateEntrega, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateEntrega, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => item.DateEntrega, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => item.DateEntrega, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-    </div>
+    }
 }
 
 <div>
