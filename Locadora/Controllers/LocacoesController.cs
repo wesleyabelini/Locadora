@@ -47,28 +47,36 @@ namespace Locadora.Controllers
         }
 
         // GET: Locacoes/Create
-        public ActionResult Create(int? id, int? filmeID)
+        public ActionResult Create(int? id, int? idfilme, string searchStringCliente, string searchStringFilme)
         {
+            ViewBag.CurrentFilterCliente = searchStringCliente;
+            ViewBag.CurrentFilterFilme = searchStringFilme;
+
             var filme = from f in db.Filmes
                 .Where(f=>f.isLocated==false)
                 select f;
 
             var viewModel = new LocadoraCreateData();
             viewModel.Cliente = db.Clientes.ToList();
-            viewModel.Filme = db.Filmes.ToList();
 
-            var cliente = db.Clientes;
+            //if (!String.IsNullOrWhiteSpace(searchStringCliente))
+            //{
+            //    viewModel.Cliente = db.Clientes.Where(c => c.Nome.ToUpper().Contains(searchStringCliente.ToUpper())).ToList();
+            //}
 
             ViewBag.FilmeID = new SelectList(filme, "FilmeID", "Nome");
 
             if (id != null)
             {
                 ViewBag.ClienteID = id.Value;
+                viewModel.Cliente = db.Clientes.Where(x => x.ID == id).ToList();
+                viewModel.Filme = db.Filmes.Where(x=>!x.isLocated).ToList();
             }
 
-            if (filmeID != null)
+            if (idfilme != null)
             {
-                ViewBag.FilmeID = filmeID.Value;
+                ViewBag.FilmeID = idfilme.Value;
+                viewModel.Filme = db.Filmes.Where(x => x.FilmeID == idfilme).ToList();
                 viewModel.Locacao = db.Locacaos.ToList();
             }
   
@@ -80,20 +88,22 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocacaoID,ClienteID,FilmeID,DateLocacao,DateEntrega")] Locacao locacao, Filme filme)
+        public ActionResult Create(int id, int idfilme)
         {
             if (ModelState.IsValid)
             {
-                Filme film = db.Filmes.Find(filme.FilmeID);
+                Filme film = db.Filmes.Find(idfilme);
                 film.isLocated = true;
 
-                db.Locacaos.Add(locacao);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var locacao = db.Locacaos;
+
+                //db.Locacaos.Add(locacao);
+                //db.SaveChanges();
+                //return RedirectToAction("Index");
             }
 
-            ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
-            return View(locacao);
+            //ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
+            return View();
         }
 
         // GET: Locacoes/Edit/5

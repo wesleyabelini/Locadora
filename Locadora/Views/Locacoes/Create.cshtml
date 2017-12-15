@@ -7,66 +7,78 @@
 
 <h2>Create</h2>
 
-<table class="table">
-    <tr>
-        <th>Nome</th>
-    </tr>
-    @foreach(var item in Model.Cliente)
-    {
-        <tr class="selectRow" valign="top">
-            <td>@Html.DisplayFor(itemModel => item.Nome)</td>
-            <td>@Html.ActionLink("Select", "", new { id = item.ID })</td>
-        </tr>
-    }
-</table>
-
-@if(Model.Cliente != null)
+@using (Html.BeginForm())
 {
-    <h3>Cliente Selecionado</h3>
+    @Html.AntiForgeryToken()
+
+    <h3>Cliente</h3>
+
+    @Html.TextBox("searchStringCliente", ViewBag.CurrentFilterCliente as string, new { placeholder = "Nome Cliente" })
+    <input type="submit" name="Search" value="Search Cliente" />
 
     <table class="table">
         <tr>
-            <th></th>
-            <th>Filme</th>
+            <th>Nome</th>
         </tr>
-
-        @foreach(var item in Model.Filme)
+        @foreach (var item in Model.Cliente)
         {
-            <tr class="selectRow">
-                <td>@Html.DisplayFor(itemModel=> item.Nome)</td>
-                <td>@Html.ActionLink("Select", "", new { id = item.FilmeID })</td>
+            <tr class="selectRow" valign="top">
+                <td>@Html.DisplayFor(itemModel => item.Nome)</td>
+                <td>@Html.ActionLink("Select", "Create", new { id = item.ID })</td>
             </tr>
         }
     </table>
-}
 
-@if(Model.Filme != null)
-{
-    <h3>Filme selected</h3>
-
-    @foreach (var item in Model.Locacao)
+    if (Model.Filme != null)
     {
-        <div class="form-group">
-            @Html.LabelFor(model => item.DateLocacao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => item.DateLocacao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => item.DateLocacao, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <h3>Filme</h3>
 
-        <div class="form-group">
-            @Html.LabelFor(model => item.DateEntrega, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => item.DateEntrega, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => item.DateEntrega, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.TextBox("searchStringFilme", ViewBag.CurrentFilterFilme as string, new { placeholder = "Nome Filme" })
+        <input type="submit" name="Search" value="Search Filme" />
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <table class="table">
+            <tr>
+                <th>Filme</th>
+            </tr>
+
+            @foreach (var item in Model.Filme)
+            {
+                <tr class="selectRow">
+                    <td>@Html.DisplayFor(itemModel => item.Nome)</td>
+                    <td>@Html.ActionLink("Select", "Create", new { idfilme = item.FilmeID })</td>
+                </tr>
+            }
+        </table>
+    }
+
+    if (Model.Locacao != null)
+    {
+        <h3>Filme selected</h3>
+
+        foreach (var item in Model.Locacao)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => item.DateLocacao, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.DateLocacao, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => item.DateLocacao, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => item.DateEntrega, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.DateEntrega, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => item.DateEntrega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        }
     }
 }
 
