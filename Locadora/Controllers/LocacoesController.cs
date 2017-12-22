@@ -88,18 +88,20 @@ namespace Locadora.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, int idfilme)
+        public ActionResult Create(int id, int? idfilme, DateTime dataLocacao, DateTime dataEntrega)
         {
             if (ModelState.IsValid)
             {
                 Filme film = db.Filmes.Find(idfilme);
                 film.isLocated = true;
 
-                var locacao = db.Locacaos;
+                Locacao locacao = new Locacao();
+                locacao.DateEntrega =dataEntrega;
+                locacao.DateLocacao = dataLocacao;
 
-                //db.Locacaos.Add(locacao);
-                //db.SaveChanges();
-                //return RedirectToAction("Index");
+                db.Locacaos.Add(locacao);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             //ViewBag.FilmeID = new SelectList(db.Filmes, "FilmeID", "Nome", locacao.FilmeID);
